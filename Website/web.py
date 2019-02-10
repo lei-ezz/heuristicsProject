@@ -11,6 +11,12 @@ def index():
     """Routes '/' to index.html"""
     return render_template('index.html')
 
+# Returns the root
+@web.route('/start', methods=['GET'])
+def strat():
+    """Routes '/start' to start.html"""
+    return render_template('start.html')
+
 # For downloading files
 @web.route('/files/<path:filename>', methods=['GET'])
 def download(filename):

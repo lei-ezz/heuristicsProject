@@ -1,6 +1,5 @@
 # For flask, mysql, crypto
 from flask import Blueprint, render_template, Response, request
-import lounger
 import json
 from helper import error
 

@@ -4,7 +4,6 @@ import mysql.connector
 import json
 import helper
 import datetime
-from order import makeOrder, addCharge
 
 post = Blueprint('post', __name__)
 
