@@ -2,6 +2,7 @@ $(document).ready(
   function startTiming() {
   var a = document.getElementById("timer");
   a = new Stopwatch(a);
+  a.start();
 })
 
 var Stopwatch = function(elem, options) {
