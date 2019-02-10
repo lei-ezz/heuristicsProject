@@ -16,11 +16,3 @@ def index():
 def strat():
     """Routes '/start' to start.html"""
     return render_template('start.html')
-
-# For downloading files
-@web.route('/files/<path:filename>', methods=['GET'])
-def download(filename):
-    """Download the file"""
-    uploads = os.path.join(current_app.root_path,
-                           current_app.config['UPLOAD_FOLDER'])
-    return send_from_directory(directory=uploads, filename=filename)

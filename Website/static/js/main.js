@@ -13,10 +13,7 @@ $(document).ready(function() {
 function nextImage(id) {
     storeStage();
     shuffleImages();
-
-    // Add recommened on one of them
-    images = shuffle(images);
-    $("#" + images[0]).attr('alt', "cool!");
+    recommened();
 }
 
 function shuffleImages() {
@@ -24,15 +21,28 @@ function shuffleImages() {
     var images = [1, 2, 3, 4];
     images = shuffle(images);
 
-    $("#1").attr('src', "/files/" + getCookie("stage") + "/" + images[0]);
-    $("#2").attr('src', "/files/" + getCookie("stage") + "/" + images[1]);
-    $("#3").attr('src', "/files/" + getCookie("stage") + "/" + images[2]);
-    $("#4").attr('src', "/files/" + getCookie("stage") + "/" + images[3]);
+    $("#1").attr('src', "../static/img/" + getCookie("stage") + "/" + images[0] + ".jpg");
+    $("#2").attr('src', "../static/img/" + getCookie("stage") + "/" + images[1] + ".jpg");
+    $("#3").attr('src', "../static/img/" + getCookie("stage") + "/" + images[2] + ".jpg");
+    $("#4").attr('src', "../static/img/" + getCookie("stage") + "/" + images[3] + ".jpg");
+}
+
+function recommened() {
+    if(getCookie("stage") > 4) {
+        // Add recommened on one of them
+        var images = [1, 2, 3, 4];
+        images = shuffle(images);
+
+        $("#cool" + images[0]).html("Cool!");
+        $("#cool" + images[1]).html("");
+        $("#cool" + images[2]).html("");
+        $("#cool" + images[3]).html("");
+    }
 }
 
 function storeStage() {
     var stage = getCookie("stage");
-    setCookie("stage", stage + 1, 3);
+    setCookie("stage", parseInt(stage) + 1, 3);
 }
 
 // https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
