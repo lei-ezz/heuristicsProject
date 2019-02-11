@@ -1,40 +1,50 @@
-// Checks if you have a valid cookie for session and will display links to either login or to your profile page
+//Bind all of the on click events
 $(document).ready(function() {
     setCookie("stage", 1, 3);
     shuffleImages();
 
-    $("#1").bind('click', function() { nextImage(1) });
-    $("#2").bind('click', function() { nextImage(2) });
-    $("#3").bind('click', function() { nextImage(3) });
-    $("#4").bind('click', function() { nextImage(4) });
+    $("#1").bind('click', function() { nextImage(1); });
+    $("#2").bind('click', function() { nextImage(2); });
+    $("#3").bind('click', function() { nextImage(3); });
+    $("#4").bind('click', function() { nextImage(4); });
 });
 
 // Updates all of the images
 function nextImage(id) {
-    if(getCookie("stage") <= 20) {
-        storeStage(id);
-        shuffleImages();
-        recommened();
-    } else showButton();
+    var stage = getCookie("stage");
+
+    if(stage <= 20) {
+        if(stage == 20) { 
+            // If the stage is 19, thne unbind the buttons
+            $("#1").unbind('click');
+            $("#2").unbind('click');
+            $("#3").unbind('click');
+            $("#4").unbind('click');
+            showButton();
+        } else {
+            // Else, save whther it was recommnded or not, and get the next image
+            storeStage(id);
+            shuffleImages();
+            recommened();
+        }
+    }
 }
 
+// Shuffle the images to be shown
 function shuffleImages() {
     // Shuffle the images of the next stage
     var images = [1, 2, 3, 4];
     images = shuffle(images);
 
     $("#1").attr('src', "../static/img/" + getCookie("stage") + "/" + images[0] + ".jpg");
-    $("#1").attr
     $("#2").attr('src', "../static/img/" + getCookie("stage") + "/" + images[1] + ".jpg");
-    $("#2").attr
     $("#3").attr('src', "../static/img/" + getCookie("stage") + "/" + images[2] + ".jpg");
-    $("#3").attr
     $("#4").attr('src', "../static/img/" + getCookie("stage") + "/" + images[3] + ".jpg");
-    $("#4").attr
 }
 
+// Recommend one of the images
 function recommened() {
-    if(getCookie("stage") > 4) {
+    if(getCookie("stage") > 5) {
         // Add recommened on one of them
         var images = [1, 2, 3, 4];
         images = shuffle(images);
@@ -47,13 +57,18 @@ function recommened() {
 }
 
 function storeStage(id) {
+    // Store whether or not it was recommended
+    if($("#cool" + id).html() == "Cool!") {
+        setCookie("r" + getCookie("stage"), 1, 3);
+    } else setCookie("r" + getCookie("stage"), 0, 3);
+
+    // Increment the stage
     var stage = getCookie("stage");
     setCookie("stage", parseInt(stage) + 1, 3);
-
-    if()
 }
 
 function showButton() {
+    alert("hi");
     // Show the button to export the final results
 
 
