@@ -6,11 +6,7 @@ $(document).ready(
 })
 
 var Stopwatch = function(elem, options) {
-  
   var timer       = createTimer(),
-      startButton = createButton("start", start),
-      stopButton  = createButton("stop", stop),
-      resetButton = createButton("reset", reset),
       offset,
       clock,
       interval;
@@ -31,9 +27,26 @@ var Stopwatch = function(elem, options) {
   // private functions
   function createTimer() {
     return document.createElement("span");
+    startTiming();
+  }
+
+  function startTiming() {
+    offset   = Date.now();
+    interval = setInterval(update, options.delay);
+
+    var a = document.createElement("a");
+
+    a.href = "#" + action;
+    a.innerHTML = action;
+    a.addEventListener("click", function(event) {
+      handler();
+      event.preventDefault();
+    });
+    return a;
   }
   
   function createButton(action, handler) {
+    
     var a = document.createElement("a");
     a.href = "#" + action;
     a.innerHTML = action;
