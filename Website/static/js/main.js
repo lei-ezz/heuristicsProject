@@ -11,9 +11,11 @@ $(document).ready(function() {
 
 // Updates all of the images
 function nextImage(id) {
-    storeStage();
-    shuffleImages();
-    recommened();
+    if(getCookie("stage") <= 20) {
+        storeStage(id);
+        shuffleImages();
+        recommened();
+    } else showButton();
 }
 
 function shuffleImages() {
@@ -22,9 +24,13 @@ function shuffleImages() {
     images = shuffle(images);
 
     $("#1").attr('src', "../static/img/" + getCookie("stage") + "/" + images[0] + ".jpg");
+    $("#1").attr
     $("#2").attr('src', "../static/img/" + getCookie("stage") + "/" + images[1] + ".jpg");
+    $("#2").attr
     $("#3").attr('src', "../static/img/" + getCookie("stage") + "/" + images[2] + ".jpg");
+    $("#3").attr
     $("#4").attr('src', "../static/img/" + getCookie("stage") + "/" + images[3] + ".jpg");
+    $("#4").attr
 }
 
 function recommened() {
@@ -40,9 +46,18 @@ function recommened() {
     }
 }
 
-function storeStage() {
+function storeStage(id) {
     var stage = getCookie("stage");
     setCookie("stage", parseInt(stage) + 1, 3);
+
+    if()
+}
+
+function showButton() {
+    // Show the button to export the final results
+
+
+    // Send AJAX Request to server
 }
 
 // https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
