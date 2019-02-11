@@ -1,8 +1,10 @@
 //Bind all of the on click events
 $(document).ready(function() {
+    // Set the initial stage to 1
     setCookie("stage", 1, 3);
     shuffleImages();
 
+    // Bind all of the images to the shuffling
     $("#1").bind('click', function() { nextImage(1); });
     $("#2").bind('click', function() { nextImage(2); });
     $("#3").bind('click', function() { nextImage(3); });
