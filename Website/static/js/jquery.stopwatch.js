@@ -9,16 +9,12 @@
     }
 
     function defaultFormatMilliseconds(millis) {
-        var x, seconds, minutes, hours;
-        x = millis / 1000;
+        var x, seconds, millisex;
+        x = millis;
+        millisex = x;
+        x /= 1000;
         seconds = Math.floor(x % 60);
-        x /= 60;
-        minutes = Math.floor(x % 60);
-        x /= 60;
-        hours = Math.floor(x % 24);
-        // x /= 24;
-        // days = Math.floor(x);
-        return [pad2(hours), pad2(minutes), pad2(seconds)].join(':');
+        return [pad2(seconds), millisex.toString().substring(millisex.toString().length-3, millisex.toString().length-2)].join(':');
     }
 
     //NOTE: This is a the 'lazy func def' pattern described at http://michaux.ca/articles/lazy-function-definition-pattern
@@ -40,7 +36,7 @@
         
         init: function(options) {
             var defaults = {
-                updateInterval: 1000,
+                updateInterval: 100,
                 startTime: 0,
                 format: '{HH}:{MM}:{SS}',
                 formatter: formatMilliseconds
