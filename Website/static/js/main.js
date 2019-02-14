@@ -1,14 +1,23 @@
+var stopwatch_time = 0;
+
 //Bind all of the on click events
 $(document).ready(function() {
     // Set the initial stage to 1
     setCookie("stage", 1, 3);
     shuffleImages();
 
+    $("#timer").stopwatch().bind('tick.stopwatch', function (e, elapsed) {
+        if (elapsed >= 20001) {
+          nextImage(0);
+          $(this).stopwatch('reset');
+        } stopwatch_time = elapsed;
+    }).stopwatch('start');
+
     // Bind all of the images to the shuffling
-    $("#1").bind('click', function() { nextImage(1); });
-    $("#2").bind('click', function() { nextImage(2); });
-    $("#3").bind('click', function() { nextImage(3); });
-    $("#4").bind('click', function() { nextImage(4); });
+    $("#1").bind('click', function() { nextImage(1); $("#timer").stopwatch().stopwatch('reset'); });
+    $("#2").bind('click', function() { nextImage(2); $("#timer").stopwatch().stopwatch('reset'); });
+    $("#3").bind('click', function() { nextImage(3); $("#timer").stopwatch().stopwatch('reset'); });
+    $("#4").bind('click', function() { nextImage(4); $("#timer").stopwatch().stopwatch('reset'); });
 });
 
 // Updates all of the images
@@ -63,6 +72,9 @@ function storeStage(id) {
     if($("#cool" + id).html() == "Recommended by AI:") {
         setCookie("r" + getCookie("stage"), 1, 3);
     } else setCookie("r" + getCookie("stage"), 0, 3);
+
+    // Store the time
+    setCookie("t" + getCookie("stage"), stopwatch_time, 3);
 
     // Increment the stage
     var stage = getCookie("stage");
