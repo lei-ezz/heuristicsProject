@@ -131,9 +131,9 @@ function storeStage(id) {
 
 function subtractMoney(id) {
     // Make sure the user has the money
-    if(wallet - prices[getCookie("stage")][id] > 0) {
+    if(wallet - prices[getCookie("stage") - 1][id - 1] > 0) {
         // Subtract the price from the wallet
-        wallet -= prices[getCookie("stage")][id];
+        wallet -= prices[getCookie("stage") - 1][id - 1];
         setCookie("money", wallet, 3);
 
         $("#wallet").html(getCookie("money"));
