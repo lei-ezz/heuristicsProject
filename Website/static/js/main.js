@@ -6,10 +6,21 @@ $(document).ready(function() {
     setCookie("stage", 1, 3);
     shuffleImages();
 
+    // Setup timer
     $("#timer").stopwatch().bind('tick.stopwatch', function (e, elapsed) {
-        if (elapsed >= 20001) {
-          nextImage(0);
-          $(this).stopwatch('reset');
+        if (elapsed >= 20001 && getCookie("stage") <= 20) {
+            if (getCookie("stage") == 20) {
+                $("#1").unbind('click');
+                $("#2").unbind('click');
+                $("#3").unbind('click');
+                $("#4").unbind('click');
+
+                $(this).stopwatch('stop');
+                showButton();
+            } 
+
+            nextImage(0);
+            $(this).stopwatch('reset');
         } stopwatch_time = elapsed;
     }).stopwatch('start');
 
@@ -18,6 +29,11 @@ $(document).ready(function() {
     $("#2").bind('click', function() { nextImage(2); $("#timer").stopwatch().stopwatch('reset'); });
     $("#3").bind('click', function() { nextImage(3); $("#timer").stopwatch().stopwatch('reset'); });
     $("#4").bind('click', function() { nextImage(4); $("#timer").stopwatch().stopwatch('reset'); });
+
+    // Bind final button
+    $("#next").on('click', "button", function() {
+        alert("hi");
+    });
 });
 
 // Updates all of the images
@@ -31,6 +47,8 @@ function nextImage(id) {
             $("#2").unbind('click');
             $("#3").unbind('click');
             $("#4").unbind('click');
+
+            $("#timer").stopwatch().stopwatch('stop');
             showButton();
         } else {
             // Else, save whther it was recommnded or not, and get the next image
@@ -82,11 +100,8 @@ function storeStage(id) {
 }
 
 function showButton() {
-    alert("hi");
     // Show the button to export the final results
-
-
-    // Send AJAX Request to server
+    $("#next").html("<button class=\"btn btn-light\" id=\"final\" type=\"button\" onclick=\"return false;\">Submit Final Results</button>");
 }
 
 // https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
