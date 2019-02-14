@@ -51,7 +51,7 @@ function recommened() {
         var images = [1, 2, 3, 4];
         images = shuffle(images);
 
-        $("#cool" + images[0]).html("Cool!");
+        $("#cool" + images[0]).html("Recommended by AI:");
         $("#cool" + images[1]).html("");
         $("#cool" + images[2]).html("");
         $("#cool" + images[3]).html("");
@@ -60,7 +60,7 @@ function recommened() {
 
 function storeStage(id) {
     // Store whether or not it was recommended
-    if($("#cool" + id).html() == "Cool!") {
+    if($("#cool" + id).html() == "Recommended by AI:") {
         setCookie("r" + getCookie("stage"), 1, 3);
     } else setCookie("r" + getCookie("stage"), 0, 3);
 
