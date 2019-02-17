@@ -1,23 +1,63 @@
 var stopwatch_time = 0;
+var wallet = 500;
+var prices = [ [10, 10, 10,  10], 
+               [10, 100, 10, 10],
+               [10, 20, 10,  10], 
+               [10, 20, 10,  10], 
+               [10, 10, 20,  10], 
+               [10, 10, 20,  10], 
+               [10, 10, 20,  10], 
+               [10, 10, 20,  10], 
+               [10, 10, 20,  10], 
+               [10, 20, 10,  10], 
+               [10, 20, 10,  10], 
+               [10, 10, 10,  20], 
+               [10, 10, 10,  20], 
+               [10, 10, 10,  20], 
+               [10, 100, 10, 10], 
+               [10, 100, 10, 10], 
+               [10, 10, 100, 10], 
+               [10, 10, 100, 10], 
+               [10, 10, 100, 10], 
+               [10, 200, 10, 10] ];
 
 //Bind all of the on click events
 $(document).ready(function() {
-    // Set the initial stage to 1
+    // Initilise
     setCookie("stage", 1, 3);
+    setCookie("money", wallet, 3);
+    $("#wallet").html(getCookie("money"));
     shuffleImages();
 
+    // Setup timer
     $("#timer").stopwatch().bind('tick.stopwatch', function (e, elapsed) {
-        if (elapsed >= 20001) {
-          nextImage(0);
-          $(this).stopwatch('reset');
+        if (elapsed >= 20001 && getCookie("stage") <= 20) {
+            if (getCookie("stage") == 20) {
+                $("#1").unbind('click');
+                $("#2").unbind('click');
+                $("#3").unbind('click');
+                $("#4").unbind('click');
+
+                $(this).stopwatch('stop');
+                showButton();
+            } 
+
+            nextImage(0);
+            $(this).stopwatch('reset');
         } stopwatch_time = elapsed;
     }).stopwatch('start');
 
     // Bind all of the images to the shuffling
-    $("#1").bind('click', function() { nextImage(1); $("#timer").stopwatch().stopwatch('reset'); });
-    $("#2").bind('click', function() { nextImage(2); $("#timer").stopwatch().stopwatch('reset'); });
-    $("#3").bind('click', function() { nextImage(3); $("#timer").stopwatch().stopwatch('reset'); });
-    $("#4").bind('click', function() { nextImage(4); $("#timer").stopwatch().stopwatch('reset'); });
+    $("#1").bind('click', function() { nextImage(1); });
+    $("#2").bind('click', function() { nextImage(2); });
+    $("#3").bind('click', function() { nextImage(3); });
+    $("#4").bind('click', function() { nextImage(4); });
+
+    // Bind final button
+    $("#next").on('click', "button", function() {
+        // This will send AJAX Request
+        alert("hi");
+    });
 });
 
 // Updates all of the images
@@ -31,12 +71,20 @@ function nextImage(id) {
             $("#2").unbind('click');
             $("#3").unbind('click');
             $("#4").unbind('click');
+
+            $("#timer").stopwatch().stopwatch('stop');
             showButton();
         } else {
             // Else, save whther it was recommnded or not, and get the next image
-            storeStage(id);
-            shuffleImages();
-            recommened();
+            if(id == 0 || subtractMoney(id)) {
+                storeStage(id);
+                shuffleImages();
+                recommened();
+                $("#timer").stopwatch().stopwatch('reset');
+            } else {
+                // User doesn't have the money
+                alert("You need more money!");
+            }
         }
     }
 }
@@ -81,12 +129,21 @@ function storeStage(id) {
     setCookie("stage", parseInt(stage) + 1, 3);
 }
 
+function subtractMoney(id) {
+    // Make sure the user has the money
+    if(wallet - prices[getCookie("stage") - 1][id - 1] > 0) {
+        // Subtract the price from the wallet
+        wallet -= prices[getCookie("stage") - 1][id - 1];
+        setCookie("money", wallet, 3);
+
+        $("#wallet").html(getCookie("money"));
+        return true;
+    } else return false;
+}
+
 function showButton() {
-    alert("hi");
     // Show the button to export the final results
-
-
-    // Send AJAX Request to server
+    $("#next").html("<button class=\"btn btn-light\" id=\"final\" type=\"button\" onclick=\"return false;\">Submit Final Results</button>");
 }
 
 // https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
