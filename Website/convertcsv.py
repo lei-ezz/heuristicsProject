@@ -13,12 +13,12 @@ def index():
     f = csv.writer(open("results/results" + str(result) + ".csv", "w"))
 
     # Write the header
-    f.writerow(["Times", "Recommended", "Money"])
+    f.writerow(["Time (s)", "Recommended", "Money ($)"])
     for i in range(1, 21):
         if(i is 1):
-            f.writerow([x["t" + str(i)], x["r" + str(i)], x["money"]])
+            f.writerow([x["t" + str(i / 1000)], x["r" + str(i)], x["money"]])
         else:
-            f.writerow([x["t" + str(i)], x["r" + str(i)], ""])
+            f.writerow([x["t" + str(i / 1000)], x["r" + str(i)], ""])
         i += 1
     return Response(response=json.dumps({ "success" : "success" }), status=200, mimetype='application/json')
 
