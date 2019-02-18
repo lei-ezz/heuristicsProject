@@ -56,7 +56,32 @@ $(document).ready(function() {
     // Bind final button
     $("#next").on('click', "button", function() {
         // This will send AJAX Request
-        alert("hi");
+        $("#final").prop('disabled', true);
+        var jsondata = {};
+
+        for(var i = 1; i < 21; i++) {
+            jsondata["t" + i] = parseInt(getCookie("t" + i));
+            jsondata["r" + i] = (getCookie("r" + i) == "1" ? 1 : 0);
+        } jsondata["money"] = parseInt(getCookie("money"));
+        console.log("Sending [" + JSON.stringify(jsondata) + "]");
+
+        $.ajax({type: "POST",
+                url: "/tocsv/",
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(jsondata),
+
+                success: function() {
+                    $("#final").html("Saved!");
+                    console.log("Success!")
+                },
+
+                error: function() {
+                    $("#final").prop('disabled', false);
+                    $("#final").html("Please try again!");
+                    console.log("Failed! :(")
+        }});
+        return false;
     });
 });
 
@@ -65,26 +90,27 @@ function nextImage(id) {
     var stage = getCookie("stage");
 
     if(stage <= 20) {
-        if(stage == 20) { 
-            // If the stage is 19, thne unbind the buttons
-            $("#1").unbind('click');
-            $("#2").unbind('click');
-            $("#3").unbind('click');
-            $("#4").unbind('click');
+        if(id == 0 || subtractMoney(id)) {
+            storeStage(id);
 
-            $("#timer").stopwatch().stopwatch('stop');
-            showButton();
-        } else {
-            // Else, save whther it was recommnded or not, and get the next image
-            if(id == 0 || subtractMoney(id)) {
-                storeStage(id);
+            if(stage == 20) { 
+                // If the stage is 19, thne unbind the buttons
+                $("#1").unbind('click');
+                $("#2").unbind('click');
+                $("#3").unbind('click');
+                $("#4").unbind('click');
+
+                $("#timer").stopwatch().stopwatch('stop');
+                showButton();
+            } else {
+                // Else, save whther it was recommnded or not, and get the next image
                 shuffleImages();
                 recommened();
                 $("#timer").stopwatch().stopwatch('reset');
-            } else {
-                // User doesn't have the money
-                alert("You need more money!");
             }
+        } else {
+            // User doesn't have the money
+            alert("You need more money!");
         }
     }
 }
