@@ -16,9 +16,9 @@ def index():
     f.writerow(["Time (s)", "Recommended", "Money ($)"])
     for i in range(1, 21):
         if(i is 1):
-            f.writerow([x["t" + str(i / 1000)], x["r" + str(i)], x["money"]])
+            f.writerow([str(x["t" + str(i)] / 1000), x["r" + str(i)], x["money"]])
         else:
-            f.writerow([x["t" + str(i / 1000)], x["r" + str(i)], ""])
+            f.writerow([str(x["t" + str(i)] / 1000), x["r" + str(i)], ""])
         i += 1
     return Response(response=json.dumps({ "success" : "success" }), status=200, mimetype='application/json')
 
@@ -34,5 +34,5 @@ def getLatest():
                 found = True
             fh.close()
         except:
-            return i
+            return 0
     return i
