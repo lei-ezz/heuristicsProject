@@ -9,94 +9,97 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <style>
-        
-        html, body {
+        html,
+        body {
             overflow-x: hidden;
         }
 
         .navbar {
-      margin-bottom: 50px;
-      border-radius: 0;
-    }
+            margin-bottom: 50px;
+            border-radius: 0;
+        }
 
-    .zoom {
-        transition: transform .2s; /* Animation */
-        margin: 0 auto;
-    }
+        .zoom {
+            transition: transform .2s;
+            /* Animation */
+            margin: 0 auto;
+        }
 
-    .zoom:hover {
-        transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
-    }
-     .jumbotron {
-      padding: 10px;
-      margin-bottom: 0;
-      height: 200px;
+        .zoom:hover {
+            transform: scale(1.1);
+            /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+        }
 
-    }
+        .jumbotron {
+            padding: 10px;
+            margin-bottom: 0;
+            height: 200px;
 
-    div.panel-body {
-      height: 300px;
-      padding: 0;
-    }
+        }
 
- img.img-responsive{
+        div.panel-body {
+            height: 300px;
+            padding: 0;
+        }
 
-     width: 100%;
-     height: 100%;
-}
+        img.img-responsive {
 
-    footer {
-      background-color: #f2f2f2;
-      padding: 25px;
-    }
+            width: 100%;
+            height: 100%;
+        }
 
-  .middle {
-  transition: .5s ease;
-  opacity: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  text-align: center;
-}
+        footer {
+            background-color: #f2f2f2;
+            padding: 25px;
+        }
 
-.Recommender {
-  transition: .5s ease;
-  opacity: 1;
-  position: absolute;
+        .middle {
+            transition: .5s ease;
+            opacity: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            text-align: center;
+        }
 
-  bottom: 25%;
-  left: 20%;
-  transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  text-align: center;
-}
+        .Recommender {
+            transition: .5s ease;
+            opacity: 1;
+            position: absolute;
+
+            bottom: 25%;
+            left: 20%;
+            transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            text-align: center;
+        }
 
 
-.Recommender img{
-  transition: .5s ease;
-  opacity: 1;
-  position: absolute;
-  top: 10%;
-  left: 90%;
-  height: 90px;
-  transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  text-align: center;
-}
+        .Recommender img {
+            transition: .5s ease;
+            opacity: 1;
+            position: absolute;
+            top: 10%;
+            left: 90%;
+            height: 90px;
+            transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            text-align: center;
+        }
 
-.panel-body:hover .middle {
-  opacity: 1;
-}
+        .panel-body:hover .middle {
+            opacity: 1;
+        }
 
-.text {
-  background-color: #445599;
-  color: white;
-  font-size: 16px;
-  padding: 16px 32px;
-}
-  </style>
+        .text {
+            background-color: #445599;
+            color: white;
+            font-size: 16px;
+            padding: 16px 32px;
+        }
+    </style>
 </head>
 
 <body>
@@ -140,7 +143,7 @@
                 <div class="panel panel-success">
                     <div id="name-1" class="panel-heading">Tent 1</div>
                     <div class="panel-body">
-                        <img id="1" src="data/tent1.jpg" class="img-responsive" style="width:100%" alt="Image">
+                        <img id="1" class="img-responsive" style="width:100%" alt="Image">
                         <!--- RECOMMENDER --->
                         <div id="cool1" class="Recommender" style="display:none;">
                             <img src="data/Picture1.png" alt="">
@@ -155,8 +158,9 @@
             <div class="col-sm-3 zoom">
                 <div class="panel panel-success">
                     <div id="name-2" class="panel-heading">Tent 2 </div>
-                    <div class="panel-body"><img id="2" src="data/tent2.jpg" class="img-responsive" style="width:100%; " alt="Image">
-                       <!--- RECOMMENDER --->
+                    <div class="panel-body"><img id="2" class="img-responsive" style="width:100%; "
+                            alt="Image">
+                        <!--- RECOMMENDER --->
                         <div id="cool2" class="Recommender" style="display:none;">
                             <img src="data/Picture1.png" alt="">
                         </div>
@@ -170,8 +174,9 @@
             <div class="col-sm-3 zoom">
                 <div class="panel panel-success">
                     <div id="name-3" class="panel-heading">Tent 3 </div>
-                    <div class="panel-body"><img id="3" src="data/tent3.jpg" class="img-responsive" style="width:100%" alt="Image">
-                       <!--- RECOMMENDER --->
+                    <div class="panel-body"><img id="3" class="img-responsive" style="width:100%"
+                            alt="Image">
+                        <!--- RECOMMENDER --->
                         <div id="cool3" class="Recommender" style="display:none;">
                             <img src="data/Picture1.png" alt="">
                         </div>
@@ -185,8 +190,9 @@
             <div class="col-sm-3 zoom ">
                 <div class="panel panel-success">
                     <div id="name-4" class="panel-heading">Tent 6</div>
-                    <div class="panel-body"><img id="4" src="data/tent6.jpg" class="img-responsive" style="width:100%" alt="Image">
-                       <!--- RECOMMENDER --->
+                    <div class="panel-body"><img id="4" class="img-responsive" style="width:100%"
+                            alt="Image">
+                        <!--- RECOMMENDER --->
                         <div id="cool4" class="Recommender" style="display:none;">
                             <img src="data/Picture1.png" alt="">
                         </div>
@@ -199,9 +205,9 @@
             </div>
         </div>
     </div><br>
-    
+
     <div id="next">
-        </div>
+    </div>
 
     <div class="container center-block">
         <div class="row center-block text-center">
