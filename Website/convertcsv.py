@@ -10,7 +10,8 @@ tocsv = Blueprint('tocv', __name__)
 def index():
     x = request.json
     result = getLatest() + 1
-    f = csv.writer(open("results/results" + str(result) + ".csv", "w"))
+    current_app.participent = 1
+    f = csv.writer(open("results/results" +"__participent__" +str(current_app.participent) + "__trail__" + str(current_app.trail) + "__Timed__" + str(current_app.time) + ".csv", "w"))
 
     # Write the header
     f.writerow(["Time (s)", "Recommended", "Money ($)"])

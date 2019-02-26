@@ -1,24 +1,24 @@
 var stopwatch_time = 0;
 var wallet = 500;
-var prices = [ [10, 10, 10,  10], 
+var prices = [ [10, 10, 10,  10],
                [10, 100, 10, 10],
-               [10, 20, 10,  10], 
-               [10, 20, 10,  10], 
-               [10, 10, 20,  10], 
-               [10, 10, 20,  10], 
-               [10, 10, 20,  10], 
-               [10, 10, 20,  10], 
-               [10, 10, 20,  10], 
-               [10, 20, 10,  10], 
-               [10, 20, 10,  10], 
-               [10, 10, 10,  20], 
-               [10, 10, 10,  20], 
-               [10, 10, 10,  20], 
-               [10, 100, 10, 10], 
-               [10, 100, 10, 10], 
-               [10, 10, 100, 10], 
-               [10, 10, 100, 10], 
-               [10, 10, 100, 10], 
+               [10, 20, 10,  10],
+               [10, 20, 10,  10],
+               [10, 10, 20,  10],
+               [10, 10, 20,  10],
+               [10, 10, 20,  10],
+               [10, 10, 20,  10],
+               [10, 10, 20,  10],
+               [10, 20, 10,  10],
+               [10, 20, 10,  10],
+               [10, 10, 10,  20],
+               [10, 10, 10,  20],
+               [10, 10, 10,  20],
+               [10, 100, 10, 10],
+               [10, 100, 10, 10],
+               [10, 10, 100, 10],
+               [10, 10, 100, 10],
+               [10, 10, 100, 10],
                [10, 200, 10, 10] ];
 
 //Bind all of the on click events
@@ -40,7 +40,7 @@ $(document).ready(function() {
 
                 $(this).stopwatch('stop');
                 showButton();
-            } 
+            }
 
             nextImage(0);
             $(this).stopwatch('reset');
@@ -62,7 +62,9 @@ $(document).ready(function() {
         for(var i = 1; i < 21; i++) {
             jsondata["t" + i] = parseInt(getCookie("t" + i));
             jsondata["r" + i] = (getCookie("r" + i) == "1" ? 1 : 0);
-        } jsondata["money"] = parseInt(getCookie("money"));
+        }
+        jsondata["money"] = parseInt(getCookie("money"));
+
         console.log("Sending [" + JSON.stringify(jsondata) + "]");
 
         $.ajax({type: "POST",
@@ -93,7 +95,7 @@ function nextImage(id) {
         if(id == 0 || subtractMoney(id)) {
             storeStage(id);
 
-            if(stage == 20) { 
+            if(stage == 20) {
                 // If the stage is 19, thne unbind the buttons
                 $("#1").unbind('click');
                 $("#2").unbind('click');
@@ -115,6 +117,7 @@ function nextImage(id) {
     }
 }
 
+
 // Shuffle the images to be shown
 function shuffleImages() {
     // Shuffle the images of the next stage
@@ -125,6 +128,11 @@ function shuffleImages() {
     $("#2").attr('src', "../static/img/" + getCookie("stage") + "/" + images[1] + ".jpg");
     $("#3").attr('src', "../static/img/" + getCookie("stage") + "/" + images[2] + ".jpg");
     $("#4").attr('src', "../static/img/" + getCookie("stage") + "/" + images[3] + ".jpg");
+
+    $("#price-" + images[0]).html("£"+ prices[getCookie("stage") - 1][images[0] - 1]);
+    $("#price-" + images[1]).html("£"+ prices[getCookie("stage") - 1][images[1] - 1]);
+    $("#price-" + images[2]).html("£"+ prices[getCookie("stage") - 1][images[2] - 1]);
+    $("#price-" + images[3]).html("£"+ prices[getCookie("stage") - 1][images[3] - 1]);
 }
 
 // Recommend one of the images
@@ -134,10 +142,19 @@ function recommened() {
         var images = [1, 2, 3, 4];
         images = shuffle(images);
 
-        $("#cool" + images[0]).html("Recommended by AI:");
-        $("#cool" + images[1]).html("");
-        $("#cool" + images[2]).html("");
-        $("#cool" + images[3]).html("");
+        $("#name-" + images[0]).html("Item "+ images[0] + " - Recommended by YOU:");
+        $("#name-" + images[0]).attr("style", "background-color:#FF1919; color:white");
+
+        $("#name-" + images[1]).html("Item "+ images[1]);
+        $("#name-" + images[1]).attr("style", "background-color: #dff0d8; color:black");
+
+        $("#name-" + images[2]).html("Item "+ images[2]);
+        $("#name-" + images[2]).attr("style", "background-color: #dff0d8; color:black");
+
+        $("#name-" + images[3]).html("Item "+ images[3]);
+        $("#name-" + images[3]).attr("style", "background-color: #dff0d8; color:black");
+
+
     }
 }
 
@@ -175,20 +192,20 @@ function showButton() {
 // https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
-  
+
     // While there remain elements to shuffle...
     while (0 !== currentIndex) {
-  
+
       // Pick a remaining element...
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex -= 1;
-  
+
       // And swap it with the current element.
       temporaryValue = array[currentIndex];
       array[currentIndex] = array[randomIndex];
       array[randomIndex] = temporaryValue;
     }
-  
+
     return array;
   }
 

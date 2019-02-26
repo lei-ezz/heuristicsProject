@@ -12,7 +12,7 @@ p {
 body {
     padding-left: 5%;
     padding-right: 5%;
-    
+
     background: url(Background1.jpg);
     background-size: auto;
 }
@@ -45,7 +45,7 @@ body {
 
 .container {
     width: 95%;
-    
+
     margin: 0 auto;
     /*padding-left: 10%;*/
 }
