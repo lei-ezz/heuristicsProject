@@ -14,3 +14,14 @@ def make():
     current_app.trail = x["trail"];
     current_app.time = x["time"];
     return Response(response=json.dumps({ "success" : "success" }), status=200, mimetype='application/json')
+
+# Gets the information from the server
+@gd.route('/getTime', methods=['POST'])
+def get():
+    part = current_app.participent
+    trail = current_app.trail
+    time = current_app.time
+    if (part is not None and trail is not None and time is not None):
+        return Response(response=json.dumps({ "time" : time }), status=200, mimetype='application/json')
+    else:
+        return Response(response=json.dumps({ "error" : "error" }), status=500, mimetype='application/json')

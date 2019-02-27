@@ -10,11 +10,12 @@
 
     function defaultFormatMilliseconds(millis) {
         var x, seconds, millisex;
-        x = millis;
+        x = 10000 - millis;
         millisex = x;
         x /= 1000;
         seconds = Math.floor(x % 60);
-        return 20-[pad2(seconds), millisex.toString().substring(millisex.toString().length-3, millisex.toString().length-2)].join('.');
+
+        return [pad2(seconds), millisex.toString().substring(millisex.toString().length-3, millisex.toString().length-2)].join('.');
     }
 
     //NOTE: This is a the 'lazy func def' pattern described at http://michaux.ca/articles/lazy-function-definition-pattern

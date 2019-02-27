@@ -10,17 +10,25 @@ tocsv = Blueprint('tocv', __name__)
 def index():
     x = request.json
     result = getLatest() + 1
-    current_app.participent = 1
-    f = csv.writer(open("results/results" +"__participent__" +str(current_app.participent) + "__trail__" + str(current_app.trail) + "__Timed__" + str(current_app.time) + ".csv", "w"))
+    f = csv.writer(open("results/results" +"__participent__" + str(current_app.participent) + "__trail__" + str(current_app.trail) + ("__timed" if current_app.time == True else "") + ".csv", "w"))
 
     # Write the header
-    f.writerow(["Time (s)", "Recommended", "Money ($)"])
-    for i in range(1, 21):
-        if(i is 1):
-            f.writerow([str(x["t" + str(i)] / 1000), x["r" + str(i)], x["money"]])
-        else:
-            f.writerow([str(x["t" + str(i)] / 1000), x["r" + str(i)], ""])
-        i += 1
+    if(current_app.time):
+        f.writerow(["Time (s)", "Recommended", "Money ($)"])
+        for i in range(1, 31):
+            if(i is 1):
+                f.writerow([str(x["t" + str(i)] / 1000), x["r" + str(i)], x["money"]])
+            else:
+                f.writerow([str(x["t" + str(i)] / 1000), x["r" + str(i)], ""])
+            i += 1
+    else:
+        f.writerow(["Recommended", "Money ($)"])
+        for i in range(1, 31):
+            if(i is 1):
+                f.writerow([x["r" + str(i)], x["money"]])
+            else:
+                f.writerow([x["r" + str(i)], ""])
+            i += 1
     return Response(response=json.dumps({ "success" : "success" }), status=200, mimetype='application/json')
 
 def getLatest():
