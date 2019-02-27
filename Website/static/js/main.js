@@ -43,36 +43,38 @@ $(document).ready(function() {
     var timed = getCookie("timed"); 
 
     // Setup timer
-    if(timed) {
-        $("#timer").stopwatch().bind('tick.stopwatch', function (e, elapsed) {
-            if (elapsed >= 10001 && getCookie("stage") <= stages) {
-                if (getCookie("stage") == stages) {
-                    $("#1").unbind('click');
-                    $("#2").unbind('click');
-                    $("#3").unbind('click');
-                    $("#4").unbind('click');
+    $("#timer").stopwatch().bind('tick.stopwatch', function (e, elapsed) {
+        if (elapsed >= 10001 && getCookie("stage") <= stages) {
+            if (getCookie("stage") == stages) {
+                $("#1").unbind('click');
+                $("#2").unbind('click');
+                $("#3").unbind('click');
+                $("#4").unbind('click');
 
-                    $(this).stopwatch('stop');
-                    showButton();
-                }
-
-                nextImage(0);
-                $(this).stopwatch('reset');
-            } 
-            
-            if (elapsed < 5000 && getCookie("stage") <= stages) {
-                $("#timerbox").attr('class', 'thumbnail alert alert-info');
-            } else {
-                if((elapsed / 100) % 3 == 0) {
-                    $("#timerbox").attr('class', 'thumbnail alert alert-danger');
-                } else {
-                    $("#timerbox").attr('class', 'thumbnail alert alert-info');
-                }
+                $(this).stopwatch('stop');
+                showButton();
             }
 
-            stopwatch_time = elapsed;
-        }).stopwatch('start');
-    } else {
+            if(timed) {
+                nextImage(0);
+                $(this).stopwatch('reset');
+            }
+        } 
+        
+        if (elapsed < 5000 && getCookie("stage") <= stages) {
+            $("#timerbox").attr('class', 'thumbnail alert alert-info');
+        } else {
+            if((elapsed / 100) % 3 == 0) {
+                $("#timerbox").attr('class', 'thumbnail alert alert-danger');
+            } else {
+                $("#timerbox").attr('class', 'thumbnail alert alert-info');
+            }
+        }
+
+        stopwatch_time = elapsed;
+    }).stopwatch('start');
+    
+    if(!timed) {
         $("#timed").hide();
     }
 
@@ -89,7 +91,7 @@ $(document).ready(function() {
         var jsondata = {};
 
         for(var i = 1; i < stages + 1; i++) {
-            if(timed) jsondata["t" + i] = parseInt(getCookie("t" + i));
+            jsondata["t" + i] = parseInt(getCookie("t" + i));
             jsondata["r" + i] = (getCookie("r" + i) == "1" ? 1 : 0);
         } jsondata["money"] = parseInt(getCookie("money"));
         console.log("Sending [" + JSON.stringify(jsondata) + "]");
@@ -139,7 +141,6 @@ function getTimed() {
 // Updates all of the images
 function nextImage(id) {
     var stage = getCookie("stage");
-    var timed = getCookie("timed");
 
     if(stage <= stages) {
         subtractMoney(id);
@@ -152,13 +153,13 @@ function nextImage(id) {
             $("#3").unbind('click');
             $("#4").unbind('click');
 
-            if(timed) $("#timer").stopwatch().stopwatch('stop');
+            $("#timer").stopwatch().stopwatch('stop');
             showButton();
         } else {
             // Else, save whther it was recommnded or not, and get the next image
             shuffleImages();
             recommened();
-            if(timed) $("#timer").stopwatch().stopwatch('reset');
+            $("#timer").stopwatch().stopwatch('reset');
         }
     }
 }
@@ -211,7 +212,7 @@ function storeStage(id) {
     }
 
     // Store the time
-    if(getCookie("timed")) setCookie("t" + getCookie("stage"), stopwatch_time, 3);
+    setCookie("t" + getCookie("stage"), stopwatch_time, 3);
 
     // Increment the stage
     var stage = getCookie("stage");
